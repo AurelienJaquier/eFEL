@@ -60,7 +60,7 @@ jobs:
       CIBW_BUILD: ${{ matrix.python }}*${{ matrix.arch }}
       CIBW_TEST_REQUIRES: nose neo[neomatlabio]>=0.5.1
       CIBW_TEST_COMMAND: nosetests -s -v -x -w {project}/efel/tests
-      CIBW_SKIP: *-musllinux_*
+      CIBW_SKIP: "*-musllinux_*"
       
     steps:
       - uses: actions/checkout@v2
