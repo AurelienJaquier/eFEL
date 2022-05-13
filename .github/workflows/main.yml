@@ -58,7 +58,7 @@ jobs:
             arch: i686
     env:
       CIBW_BUILD: ${{ matrix.python }}*${{ matrix.arch }}
-      CIBW_TEST_REQUIRES: nose neo
+      CIBW_TEST_REQUIRES: nose neo[neomatlabio]
       CIBW_TEST_COMMAND: nosetests -s -v -x -w {project}/efel/tests
       
     steps:
