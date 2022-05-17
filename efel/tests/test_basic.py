@@ -689,9 +689,14 @@ def test_strict_stiminterval():
 
 def test_ISI_log_slope():
     """basic: Test ISI_log_slope"""
+    import warnings
+
+    warnings.warn("in test_ISI_log_slope")
 
     import efel
     efel.reset()
+
+    warning.warn("efel imported")
 
     stim_start = 500.0
     stim_end = 900.0
@@ -705,21 +710,31 @@ def test_ISI_log_slope():
     trace['stim_start'] = [stim_start]
     trace['stim_end'] = [stim_end]
 
+    warnings.warn("trace created")
+
     features = ['ISI_values', 'ISI_log_slope']
 
     feature_values = \
         efel.getFeatureValues(
             [trace],
-            features, raise_warnings=False)
+            features)
+
+    warnings.warn("features extracted")
     isi_values = feature_values[0]['ISI_values']
     x_values = numpy.arange(0, len(isi_values)) + 1.0
+
+    warnings.warn("get x values")
 
     # fit
     log_x_values = numpy.log(x_values)
     log_isi_values = numpy.log(isi_values)
+    warnings.warn("make log")
     slope, _ = numpy.polyfit(log_x_values, log_isi_values, 1)
+    warnings.warn ("make polyfit")
 
     nt.assert_almost_equal(feature_values[0]['ISI_log_slope'][0], slope)
+
+    warnings.warn("assert done")
 
 
 def test_ISI_semilog_slope():
