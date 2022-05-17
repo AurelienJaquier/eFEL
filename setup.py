@@ -74,7 +74,7 @@ setup(
     name="efel",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    install_requires=['numpy==1.17.3', 'six'],
+    install_requires=['numpy>=1.6', 'six'],
     extras_require={'neo': ['neo[neomatlabio]>=0.5.1']},
     packages=['efel', 'efel.pyfeatures'],
     author="BlueBrain Project, EPFL",

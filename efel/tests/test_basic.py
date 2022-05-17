@@ -625,116 +625,102 @@ def test_min_AHP_indices_strict():
         nt.assert_equal(len(AHP_time_from_peak), n_of_ahp)
 
 
-# def test_min_AHP_indices_single_peak():
-#     """basic: Test min_AHP_indices with a single peak."""
+def test_min_AHP_indices_single_peak():
+    """basic: Test min_AHP_indices with a single peak."""
 
-#     import efel
+    import efel
 
-#     trace_file = os.path.join(
-#         testdata_dir,
-#         'basic',
-#         'min_AHP_values_single_peak.txt')
-#     trace_values = numpy.loadtxt(trace_file)
+    trace_file = os.path.join(
+        testdata_dir,
+        'basic',
+        'min_AHP_values_single_peak.txt')
+    trace_values = numpy.loadtxt(trace_file)
 
-#     trace = {}
-#     trace["T"] = trace_values[:, 0]
-#     trace["V"] = trace_values[:, 1]
-#     trace["stim_start"] = [1950]
-#     trace["stim_end"] = [2050]
+    trace = {}
+    trace["T"] = trace_values[:, 0]
+    trace["V"] = trace_values[:, 1]
+    trace["stim_start"] = [1950]
+    trace["stim_end"] = [2050]
 
-#     feats = efel.getFeatureValues(
-#         [trace], ["min_AHP_values", "min_AHP_indices", "peak_indices"])
+    feats = efel.getFeatureValues(
+        [trace], ["min_AHP_values", "min_AHP_indices", "peak_indices"])
 
-#     assert len(feats[0]["peak_indices"]) == 1
-#     assert feats[0]["min_AHP_indices"] is None
-#     assert feats[0]["min_AHP_values"] is None
-
-
-# def test_strict_stiminterval():
-#     """basic: Test strict_stiminterval"""
-
-#     import efel
-
-#     for strict, n_of_spikes in [(False, 5), (True, 3)]:
-#         efel.reset()
-#         efel.setIntSetting("strict_stiminterval", strict)
-
-#         stim_start = 600.0
-#         stim_end = 750.0
-
-#         time = efel.io.load_fragment('%s#col=1' % meanfrequency1_url)
-#         voltage = efel.io.load_fragment('%s#col=2' % meanfrequency1_url)
-#         trace = {}
-
-#         trace['T'] = time
-#         trace['V'] = voltage
-#         trace['stim_start'] = [stim_start]
-#         trace['stim_end'] = [stim_end]
-
-#         features = ['peak_indices', 'peak_time', 'Spikecount']
-
-#         feature_values = \
-#             efel.getFeatureValues(
-#                 [trace],
-#                 features, raise_warnings=False)
-
-#         peak_indices = feature_values[0]['peak_indices']
-#         peak_time = feature_values[0]['peak_time']
-#         spikecount = feature_values[0]['Spikecount']
-
-#         nt.assert_equal(len(peak_indices), n_of_spikes)
-#         nt.assert_equal(len(peak_time), n_of_spikes)
-#         nt.assert_equal(spikecount, n_of_spikes)
+    assert len(feats[0]["peak_indices"]) == 1
+    assert feats[0]["min_AHP_indices"] is None
+    assert feats[0]["min_AHP_values"] is None
 
 
-# def test_ISI_log_slope():
-#     """basic: Test ISI_log_slope"""
-#     import warnings
+def test_strict_stiminterval():
+    """basic: Test strict_stiminterval"""
 
-#     warnings.warn("in test_ISI_log_slope")
+    import efel
 
-#     import efel
-#     efel.reset()
+    for strict, n_of_spikes in [(False, 5), (True, 3)]:
+        efel.reset()
+        efel.setIntSetting("strict_stiminterval", strict)
 
-#     warnings.warn("efel imported")
+        stim_start = 600.0
+        stim_end = 750.0
 
-#     stim_start = 500.0
-#     stim_end = 900.0
+        time = efel.io.load_fragment('%s#col=1' % meanfrequency1_url)
+        voltage = efel.io.load_fragment('%s#col=2' % meanfrequency1_url)
+        trace = {}
 
-#     time = efel.io.load_fragment('%s#col=1' % meanfrequency1_url)
-#     voltage = efel.io.load_fragment('%s#col=2' % meanfrequency1_url)
-#     trace = {}
+        trace['T'] = time
+        trace['V'] = voltage
+        trace['stim_start'] = [stim_start]
+        trace['stim_end'] = [stim_end]
 
-#     trace['T'] = time
-#     trace['V'] = voltage
-#     trace['stim_start'] = [stim_start]
-#     trace['stim_end'] = [stim_end]
+        features = ['peak_indices', 'peak_time', 'Spikecount']
 
-#     warnings.warn("trace created")
+        feature_values = \
+            efel.getFeatureValues(
+                [trace],
+                features, raise_warnings=False)
 
-#     features = ['ISI_values', 'ISI_log_slope']
+        peak_indices = feature_values[0]['peak_indices']
+        peak_time = feature_values[0]['peak_time']
+        spikecount = feature_values[0]['Spikecount']
 
-#     feature_values = \
-#         efel.getFeatureValues(
-#             [trace],
-#             features)
+        nt.assert_equal(len(peak_indices), n_of_spikes)
+        nt.assert_equal(len(peak_time), n_of_spikes)
+        nt.assert_equal(spikecount, n_of_spikes)
 
-#     warnings.warn("features extracted")
-#     isi_values = feature_values[0]['ISI_values']
-#     x_values = numpy.arange(0, len(isi_values)) + 1.0
 
-#     warnings.warn("get x values")
+def test_ISI_log_slope():
+    """basic: Test ISI_log_slope"""
 
-#     # fit
-#     log_x_values = numpy.log(x_values)
-#     log_isi_values = numpy.log(isi_values)
-#     warnings.warn("make log")
-#     slope, _ = numpy.polyfit(log_x_values, log_isi_values, 1)
-#     warnings.warn("make polyfit")
+    import efel
+    efel.reset()
 
-#     nt.assert_almost_equal(feature_values[0]['ISI_log_slope'][0], slope)
+    stim_start = 500.0
+    stim_end = 900.0
 
-#     warnings.warn("assert done")
+    time = efel.io.load_fragment('%s#col=1' % meanfrequency1_url)
+    voltage = efel.io.load_fragment('%s#col=2' % meanfrequency1_url)
+    trace = {}
+
+    trace['T'] = time
+    trace['V'] = voltage
+    trace['stim_start'] = [stim_start]
+    trace['stim_end'] = [stim_end]
+
+    features = ['ISI_values', 'ISI_log_slope']
+
+    feature_values = \
+        efel.getFeatureValues(
+            [trace],
+            features)
+
+    isi_values = feature_values[0]['ISI_values']
+    x_values = numpy.arange(0, len(isi_values)) + 1.0
+
+    # fit
+    log_x_values = numpy.log(x_values)
+    log_isi_values = numpy.log(isi_values)
+    slope, _ = numpy.polyfit(log_x_values, log_isi_values, 1)
+
+    nt.assert_almost_equal(feature_values[0]['ISI_log_slope'][0], slope)
 
 
 def test_ISI_semilog_slope():
