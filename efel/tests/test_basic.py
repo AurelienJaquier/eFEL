@@ -710,8 +710,7 @@ def test_ISI_log_slope():
     feature_values = \
         efel.getFeatureValues(
             [trace],
-            features)
-
+            features, raise_warnings=False)
     isi_values = feature_values[0]['ISI_values']
     x_values = numpy.arange(0, len(isi_values)) + 1.0
 
