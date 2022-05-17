@@ -696,7 +696,7 @@ def test_ISI_log_slope():
     import efel
     efel.reset()
 
-    warning.warn("efel imported")
+    warnings.warn("efel imported")
 
     stim_start = 500.0
     stim_end = 900.0
@@ -730,7 +730,7 @@ def test_ISI_log_slope():
     log_isi_values = numpy.log(isi_values)
     warnings.warn("make log")
     slope, _ = numpy.polyfit(log_x_values, log_isi_values, 1)
-    warnings.warn ("make polyfit")
+    warnings.warn("make polyfit")
 
     nt.assert_almost_equal(feature_values[0]['ISI_log_slope'][0], slope)
 
