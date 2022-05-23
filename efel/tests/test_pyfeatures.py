@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import os
 import numpy
 
-
 import efel
 
 testdata_dir = os.path.join(
