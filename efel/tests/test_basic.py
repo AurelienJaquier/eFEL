@@ -203,7 +203,7 @@ def test_raise_warnings():
         assert feature_value is None
         assert len(warning) == 1
         assert ("Error while calculating feature AP_amplitude" in
-            str(warning[0].message))
+                str(warning[0].message))
 
     with warnings.catch_warnings(record=True) as warning:
         warnings.simplefilter("always")
@@ -753,7 +753,9 @@ def test_ISI_semilog_slope():
     log_isi_values = numpy.log(isi_values)
     slope, _ = numpy.polyfit(x_values, log_isi_values, 1)
 
-    numpy.testing.assert_allclose(feature_values[0]['ISI_semilog_slope'][0], slope)
+    numpy.testing.assert_allclose(
+        feature_values[0]['ISI_semilog_slope'][0], slope
+    )
 
 
 def test_AP_begin_indices1():
@@ -848,7 +850,7 @@ def test_AP_end_indices():
         # the voltage value for the end index should be closer than that of
         # begin index than the peak
         assert (abs(voltage[begin] - voltage[end])
-                       < abs(voltage[peak] - voltage[end]))
+                < abs(voltage[peak] - voltage[end]))
         assert end > begin
 
     efel.reset()
@@ -969,7 +971,7 @@ def test_ap_amplitude_from_voltagebase1():
             feature_values[0]['peak_voltage'],
             feature_values[0]['AP_amplitude_from_voltagebase']):
         numpy.testing.assert_allclose(peak_voltage - voltage_base,
-                               ap_amplitude_from_voltagebase)
+                                      ap_amplitude_from_voltagebase)
 
 
 def test_voltagebase1():
@@ -993,8 +995,9 @@ def test_voltagebase1():
     voltage_base = numpy.mean(interp_voltage[numpy.where(
         (interp_time >= 0.9 * stim_start) & (interp_time <= stim_start))])
 
-    numpy.testing.assert_allclose(voltage_base, feature_values[0]['voltage_base'][0],
-                           rtol=0, atol=1e-8)
+    numpy.testing.assert_allclose(voltage_base,
+                                  feature_values[0]['voltage_base'][0],
+                                  rtol=0, atol=1e-8)
 
 
 def test_voltagebase_median():
@@ -1019,8 +1022,9 @@ def test_voltagebase_median():
     voltage_base = numpy.median(interp_voltage[numpy.where(
         (interp_time >= 0.9 * stim_start) & (interp_time <= stim_start))])
 
-    numpy.testing.assert_allclose(voltage_base, feature_values[0]['voltage_base'][0],
-                           rtol=0, atol=1e-8)
+    numpy.testing.assert_allclose(voltage_base,
+                                  feature_values[0]['voltage_base'][0],
+                                  rtol=0, atol=1e-8)
 
 
 def test_currentbase():
@@ -1046,8 +1050,9 @@ def test_currentbase():
         (time >= 0.9 * stim_start) & (time <= stim_start))])
 
     # nt.set_trace()
-    numpy.testing.assert_allclose(current_base, feature_values[0]['current_base'][0],
-                           rtol=0, atol=1e-8)
+    numpy.testing.assert_allclose(current_base,
+                                  feature_values[0]['current_base'][0],
+                                  rtol=0, atol=1e-8)
 
 
 def test_currentbase_median():
@@ -1073,8 +1078,9 @@ def test_currentbase_median():
     current_base = numpy.median(current[numpy.where(
         (time >= 0.9 * stim_start) & (time <= stim_start))])
 
-    numpy.testing.assert_allclose(current_base, feature_values[0]['current_base'][0],
-                           rtol=0, atol=1e-8)
+    numpy.testing.assert_allclose(current_base,
+                                  feature_values[0]['current_base'][0],
+                                  rtol=0, atol=1e-8)
 
 
 def test_getDistance1():
@@ -1164,7 +1170,9 @@ def test_getDistance_trace_check():
     trace['stim_end'] = [70]
     traces.append(trace)
 
-    numpy.testing.assert_allclose(efel.getDistance(trace, 'Spikecount', 0, 1), 3.0)
+    numpy.testing.assert_allclose(
+        efel.getDistance(trace, 'Spikecount', 0, 1), 3.0
+    )
 
     trace['stim_end'] = [50]
 
@@ -1179,7 +1187,9 @@ def test_getDistance_trace_check():
         3.0)
 
     efel.reset()
-    numpy.testing.assert_allclose(efel.getDistance(trace, 'Spikecount', 0, 1), 250.0)
+    numpy.testing.assert_allclose(
+        efel.getDistance(trace, 'Spikecount', 0, 1), 250.0
+    )
 
 
 def test_APlast_amp():
@@ -1505,9 +1515,7 @@ def test_sag_amplitude_pos_deflect():
             features,
             raise_warnings=False)
 
-    assert (
-        feature_values[0]['sag_amplitude'] ==
-        None)
+    assert (feature_values[0]['sag_amplitude'] is None)
 
 
 def test_sag_ratio1():
@@ -1773,7 +1781,7 @@ def test_steady_state_voltage1():
     steady_state_voltage = numpy.mean(voltage[numpy.where(time >= stim_end)])
 
     numpy.testing.assert_allclose(steady_state_voltage,
-                           feature_values['steady_state_voltage'][0])
+                                  feature_values['steady_state_voltage'][0])
 
 
 def test_steady_state_voltage_stimend():
@@ -1799,8 +1807,10 @@ def test_steady_state_voltage_stimend():
         (time < end_time) & (time >= begin_time)
     )])
 
-    numpy.testing.assert_allclose(steady_state_voltage_stimend,
-                           feature_values['steady_state_voltage_stimend'][0])
+    numpy.testing.assert_allclose(
+        steady_state_voltage_stimend,
+        feature_values['steady_state_voltage_stimend'][0]
+    )
 
 
 def test_maximum_voltage_from_voltagebase():
@@ -2008,7 +2018,7 @@ def test_getmeanfeaturevalues():
             'AP_amplitude', 'BPAPHeightLoc1'], raise_warnings=False)
 
     assert (numpy.mean(feature_values[0]['AP_amplitude']) ==
-                    mean_feature_values[0]['AP_amplitude'])
+            mean_feature_values[0]['AP_amplitude'])
 
 
 def test_mean_AP_amplitude():
@@ -2036,7 +2046,7 @@ def test_mean_AP_amplitude():
             ['AP_amplitude', 'mean_AP_amplitude'], raise_warnings=False)
 
     assert (numpy.mean(feature_values[0]['AP_amplitude']) ==
-                    feature_values[0]['mean_AP_amplitude'])
+            feature_values[0]['mean_AP_amplitude'])
 
 
 def test_unfinished_peak():

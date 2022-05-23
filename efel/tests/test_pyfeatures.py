@@ -171,8 +171,9 @@ def _test_expected_value(feature_name, expected_values):
             assert feature_values[0][feature_name] is None
         else:
             assert numpy.allclose(
-                    feature_values[0][feature_name],
-                    expected_value)
+                feature_values[0][feature_name],
+                expected_value
+            )
 
 
 def test_initburst_sahp():

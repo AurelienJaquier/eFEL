@@ -143,9 +143,9 @@ class TestCppcore(object):
         efel.cppcore.getFeature('AP_amplitude', feature_values)
         assert isinstance(feature_values[0], float)
         assert 5 == len(feature_values)
-        assert np.allclose(
-                [80.45724099440199, 80.46320199354948, 80.73300299176428,
-                 80.9965359926715, 81.87292599493423], feature_values)
+        assert np.allclose([80.45724099440199, 80.46320199354948,
+                            80.73300299176428, 80.9965359926715,
+                            81.87292599493423], feature_values)
 
         # get int feature
         feature_values = list()

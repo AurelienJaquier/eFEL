@@ -6,7 +6,6 @@ declare -a StringArray=("./")
 
 for dir in ${StringArray[@]}
 do
-    touch ${dir}__init__.py
     sed -i'' 's/nt.assert_raises/pytest.raises/g' $dir*.py
     sed -i'' 's/nt.ok_/nt.assert_true/g' $dir*.py
     sed -i'' 's/nt.eq_/nt.assert_equal/g' $dir*.py
